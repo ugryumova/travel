@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Туры</title>
+    <style>
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:15px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+            text-align: center;
+        }
+        .button {
+            background-color: #3D009E; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+        body {
+            background:  #9A6BFF ;
+            padding: 10px;
+            background-repeat: no-repeat;
+            }
+        label {
+            font-family: Helvetica;
+            }
+            td {
+            font-family: Arial;
+            }
+            th{
+            font-family: Arial;
+            }
+    </style>
+</head>
+<body class="container">
+    <div id="header" >
+        <h3 align="right"><a href="/admin/logout/">выйти из аккаунта</a></h3>
+        <h1 align="center">Туры</h1>
+        <h3 align="center"><a href = "{% url 'home' %}">назад</a></h3>
+    </div>
+
+<table border="1" width="70%" align="center">
+    <tr>
+        <th align="center" width="50%">
+    <form method="POST" action="add/">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input class="button" type="submit" value="Добавить тур">
+    </form>
+    <br>
+    <br>
+    <form method="POST" action="del/">
+        {% csrf_token %}
+        <label>Введите id: </label>
+        <input class = 'myfield' type= "number" name="delname" ><br>
+        <input class="button" type= "submit" value="Удалить тур">
+    </form>
+    <br>
+    <br>
+    <form method="POST" action="up/">
+        {% csrf_token %}
+        <label>Введите id: </label>
+        <input class = 'myfield' type= "number" name="upname"><br>
+        <table>
+            {{ form }}
+        </table>
+        <input class="button" type= "submit" value="Изменить тур">
+    </form>
+    </table>
+    <th align="center" width="50%">
+        <h1 align="center"> Список туров<h1>
+    <table border="1" width="70%" align="center">
+    <tr>
+
+    <form method="POST" action="show/">
+        {% csrf_token %}
+        <table align="center" border="1" width="70%">
+            <tr align="center" bgcolor="#5400DB">
+                <th>ID</th>
+                <th>Тип тура</th>
+                <th>Продолжительность</th>
+            </tr>
+        {% for i in data_show %}
+            <tr align="center">
+                <td>{{ i.id }}</td>
+                <td>{{ i.type }}</td>
+                <td>{{ i.duration }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </form>
+        </th>
+    </tr>
+</table>
+
+</body>
+</html>

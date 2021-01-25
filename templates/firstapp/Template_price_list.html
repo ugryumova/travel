@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Прайс-листы</title>
+    <style>
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:15px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+            text-align: center;
+        }
+        .button {
+            background-color: #3D009E;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+        body {
+            background:  #9A6BFF ;
+            padding: 10px;
+            background-repeat: no-repeat;
+            }
+        label {
+            font-family: Helvetica;
+            }
+            td {
+            font-family: Arial;
+            }
+            th{
+            font-family: Arial;
+            }
+    </style>
+</head>
+<body class="container">
+    <div id="header" >
+        <h1 align="center">Прайс-листы</h1>
+        <h3 align="center"><a href = "{% url 'home' %}">назад</a></h3>
+        <h3 align="right"><a href="/admin/logout/">выйти из аккаунта</a></h3>
+    </div>
+
+<table border="1" width="70%" align="center">
+    <tr>
+        <th align="center" width="50%">
+    <form method="POST" action="add/">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input class="button" type="submit" value="Добавить прайс-лист">
+    </form>
+    <br>
+    <br>
+    <form method="POST" action="del/">
+        {% csrf_token %}
+        <label>Введите id: </label>
+        <input class = 'myfield' type= "number" name="delname" ><br>
+        <input class="button" type= "submit" value="Удалить прайс-лист">
+    </form>
+    <br>
+    <br>
+    <form method="POST" action="up/">
+        {% csrf_token %}
+        <label>Введите id: </label>
+        <input class = 'myfield' type= "number" name="upname"><br>
+        <table>
+            {{ form }}
+        </table>
+        <input class="button" type= "submit" value="Изменить прайс-лист">
+    </form>
+    </table>
+    <th align="center" width="50%">
+        <h1 align="center"> Список прайс-листов</h1>
+    <table border="1" width="70%" align="center">
+    <tr>
+
+    <form method="POST" action="show/">
+        {% csrf_token %}
+        <table border="1" width="100%">
+            <tr align="center" bgcolor="#5400DB">
+                <th>ID</th>
+                <th>Дата начала</th>
+                <th>Стоимость</th>
+                <th>ID отеля</th>
+                <th>ID тура</th>
+            </tr>
+        {% for i in data_show %}
+            <tr align="center">
+                <td>{{ i.id }}</td>
+                <td>{{ i.data_of_start }}</td>
+                <td>{{ i.cost }}</td>
+                <td> <a href="{% url 'hotel' %}"> {{ i.id_hotel }} </a></td>
+                <td> <a href="{% url 'tour' %}"> {{ i.id_tour }} </a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </form>
+        </th>
+    </tr>
+</table>
+
+</body>
+</html>
